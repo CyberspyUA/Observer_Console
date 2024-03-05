@@ -4,6 +4,13 @@
 
 #include "CursorObserver.h"
 
+/**
+ * \brief
+ * TODO: Refactor this method.
+ * TODO: 13 - 20 lines can be moved to another method.
+ * TODO: 32 - 67 should be moved to CursorSubject class.
+ * TODO: Correct design pattern implementation.
+ */
 void StartApplication()
 {
 	const LPCWSTR fileName = L"ActionsLogs.txt"; //Назва та формат файлу, де будуть зберігатися логи.

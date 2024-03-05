@@ -17,12 +17,12 @@ void CursorSubject::Detach(std::shared_ptr<IConsoleObserver> observer)
         }
 	}
 }
-
+//TODO: Implement this method.
 void CursorSubject::NotifyEntrance()
 {
 
 }
-
+//TODO: Implementh this method.
 void CursorSubject::NotifyLeaving()
 {
 }
