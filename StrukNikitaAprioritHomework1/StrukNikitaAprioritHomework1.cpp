@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <ctime>
 
 #include "CursorObserver.h"
 
@@ -24,27 +25,37 @@ void StartApplication()
 			}
 	        while(!(GetAsyncKeyState('Q') & 0x8000)) //Поки користувач не натиснув клавішу Q.
 	        {
-		        CursorObserver cursorObserver;
-	            DWORD bytesWritten;
-	            POINT cursorPos;
                 CONSOLE_SCREEN_BUFFER_INFO consoleScreenBufferInfo;
-				GetCursorPos(&cursorPos);
-				ScreenToClient(GetConsoleWindow(), &cursorPos);
 	            if(GetConsoleScreenBufferInfo(handleConsole, &consoleScreenBufferInfo))
 	            {
+                    CursorObserver cursorObserver;
+		            DWORD bytesWritten;
+
+		            POINT cursorPos;
+                    GetCursorPos(&cursorPos);
+					ScreenToClient(GetConsoleWindow(), &cursorPos);
+
+                    time_t timer;
+	            	tm timeInformation{};
+	                char timeBuffer[26];
+	                time(&timer);
+					localtime_s(&timeInformation, &timer);
+                    asctime_s(timeBuffer, sizeof(timeBuffer), &timeInformation);
+
 	                if(cursorPos.x >= 0 && cursorPos.x < consoleScreenBufferInfo.dwSize.X && cursorPos.y >= 0 && cursorPos.y < consoleScreenBufferInfo.dwSize.Y)
 	                {
 						cursorObserver.StartObservation(handleConsole);
-						WriteFile(logFile,"Enter\n",strlen("Enter\n"),&bytesWritten,nullptr);
+						std::string logMessage = "|Enter|" + std::string(timeBuffer);
+						WriteFile(logFile,logMessage.c_str(),strlen(logMessage.c_str()),&bytesWritten,nullptr);
 	                }
 	                else
 	                {
 		                cursorObserver.StopObservation(handleConsole);
-                        WriteFile(logFile,"Leave\n",strlen("Leave\n"),&bytesWritten,nullptr);
+                        std::string logMessage = "|Leave|" + std::string(timeBuffer);
+                        WriteFile(logFile,logMessage.c_str(),strlen(logMessage.c_str()),&bytesWritten,nullptr);
 	                }
 	                std::cout << "Hello world!\n";
-                    Sleep(1);
-            		system("cls");
+                    Sleep(1000);
 	            }
 	            else
 	            {
