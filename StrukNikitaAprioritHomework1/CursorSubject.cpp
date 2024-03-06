@@ -1,5 +1,7 @@
 #include "CursorSubject.h"
 
+#include <string>
+
 
 void CursorSubject::Attach(std::shared_ptr<IConsoleObserver> observer)
 {
@@ -17,12 +19,17 @@ void CursorSubject::Detach(std::shared_ptr<IConsoleObserver> observer)
         }
 	}
 }
-//TODO: Implement this method.
-void CursorSubject::NotifyEntrance()
+void CursorSubject::NotifyEntrance(HANDLE handleConsole)
 {
-
+	for (auto observer : cursorObservers)
+	{
+		observer->StartObservation(handleConsole);
+	}
 }
-//TODO: Implementh this method.
-void CursorSubject::NotifyLeaving()
+void CursorSubject::NotifyLeaving(HANDLE handleConsole)
 {
+	for (auto observer : cursorObservers)
+	{
+		observer->StopObservation(handleConsole);
+	}
 }

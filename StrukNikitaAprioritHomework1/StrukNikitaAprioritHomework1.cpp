@@ -3,25 +3,18 @@
 #include <ctime>
 
 #include "CursorObserver.h"
+#include "CursorSubject.h"
 
-/**
- * \brief
- * TODO: Refactor this method.
- * TODO: 13 - 20 lines can be moved to another method.
- * TODO: 32 - 67 should be moved to CursorSubject class.
- * TODO: Correct design pattern implementation.
- */
 void StartApplication()
 {
 	const LPCWSTR fileName = L"ActionsLogs.txt"; //Назва та формат файлу, де будуть зберігатися логи.
-    const HANDLE logFile = CreateFile(fileName,
-                          GENERIC_WRITE, 
-                          0,
-                          0,
-                          CREATE_ALWAYS,
-                          FILE_ATTRIBUTE_NORMAL,
-                          0);
-    if (logFile)
+	if (const HANDLE logFile = CreateFile(fileName, //Назва створюваного файлу
+	                                      GENERIC_WRITE, //Режим роботи із файлом
+	                                      0,
+	                                      0,
+	                                      CREATE_ALWAYS,
+	                                      FILE_ATTRIBUTE_NORMAL,
+	                                      0))
     {
         HANDLE handleConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         try
@@ -30,12 +23,17 @@ void StartApplication()
 	        {
 		        throw std::runtime_error("Error getting console handle.");
 			}
-	        while(!(GetAsyncKeyState('Q') & 0x8000)) //Поки користувач не натиснув клавішу Q.
+			std::shared_ptr<CursorObserver> cursorObserver = std::make_shared<CursorObserver>();
+        	CursorSubject cursorSubject;
+        	cursorSubject.Attach(cursorObserver);
+	        while(!(GetAsyncKeyState('Q'))) //Поки користувач не натиснув клавішу Q.
 	        {
+				
                 CONSOLE_SCREEN_BUFFER_INFO consoleScreenBufferInfo;
 	            if(GetConsoleScreenBufferInfo(handleConsole, &consoleScreenBufferInfo))
 	            {
-                    CursorObserver cursorObserver;
+                    
+
 		            DWORD bytesWritten;
 
 		            POINT cursorPos;
@@ -51,13 +49,13 @@ void StartApplication()
 
 	                if(cursorPos.x >= 0 && cursorPos.x < consoleScreenBufferInfo.dwSize.X && cursorPos.y >= 0 && cursorPos.y < consoleScreenBufferInfo.dwSize.Y)
 	                {
-						cursorObserver.StartObservation(handleConsole);
+						cursorSubject.NotifyEntrance(handleConsole);
 						std::string logMessage = "|Enter|" + std::string(timeBuffer);
 						WriteFile(logFile,logMessage.c_str(),strlen(logMessage.c_str()),&bytesWritten,nullptr);
 	                }
 	                else
 	                {
-		                cursorObserver.StopObservation(handleConsole);
+						cursorSubject.NotifyLeaving(handleConsole);
                         std::string logMessage = "|Leave|" + std::string(timeBuffer);
                         WriteFile(logFile,logMessage.c_str(),strlen(logMessage.c_str()),&bytesWritten,nullptr);
 	                }
@@ -69,6 +67,7 @@ void StartApplication()
 		            throw std::runtime_error("Error getting console buffer info.");
 	            }
 	        }
+			cursorSubject.Detach(cursorObserver);
         }
         catch(const std::runtime_error& errorName)
         {

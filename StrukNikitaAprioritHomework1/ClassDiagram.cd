@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CursorObserver">
+    <Position X="13.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAAgAAA=</HashCode>
+      <FileName>CursorObserver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CursorSubject">
+    <Position X="10.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAIAAAAAAAAAAIAAABSAAAAAAAAAAAA=</HashCode>
+      <FileName>CursorSubject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IConsoleObserver">
+    <Position X="13.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAEAAAAAAAAgAAA=</HashCode>
+      <FileName>IConsoleObserver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IConsoleSubject">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAABAAAAAAAIAAABCAAAAAAAAAAAA=</HashCode>
+      <FileName>IConsoleSubject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

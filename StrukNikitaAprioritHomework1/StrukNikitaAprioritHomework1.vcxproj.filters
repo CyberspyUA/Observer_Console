@@ -29,14 +29,19 @@
     <ClInclude Include="CursorObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CursorSubject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="IConsoleObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IConsoleSubject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CursorSubject.h">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </None>
   </ItemGroup>
 </Project>

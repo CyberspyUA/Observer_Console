@@ -12,10 +12,10 @@ class CursorSubject : public IConsoleSubject
 private:
 	std::vector<std::shared_ptr<CursorObserver>> cursorObservers;
 public:
-	void Attach(std::shared_ptr<IConsoleObserver> observer) override;
-	void Detach(std::shared_ptr<IConsoleObserver> observer) override;
-	void NotifyEntrance() override;
-	void NotifyLeaving() override;
+	void Attach(std::shared_ptr<IConsoleObserver> observer) override; //Додає вказівник на спостерігач до вектора
+	void Detach(std::shared_ptr<IConsoleObserver> observer) override; //Видаляє вказівник на спостерігач із вектора
+	void NotifyEntrance(HANDLE handleConsole) override; //Повідомляє усі привязані спостерігачі проте, що курсор увійшов до консолі.
+	void NotifyLeaving(HANDLE handleConsole) override; //Повідомляє усі привязані спостерігачі проте, що курсор вийшов із консолі.
 	~CursorSubject() override = default;
 
 };
