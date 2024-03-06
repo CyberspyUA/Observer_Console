@@ -19,14 +19,14 @@ void CursorSubject::Detach(std::shared_ptr<IConsoleObserver> observer)
         }
 	}
 }
-void CursorSubject::NotifyEntrance(HANDLE handleConsole)
+void CursorSubject::NotifyEntrance(const HANDLE &handleConsole)
 {
 	for (auto observer : cursorObservers)
 	{
 		observer->StartObservation(handleConsole);
 	}
 }
-void CursorSubject::NotifyLeaving(HANDLE handleConsole)
+void CursorSubject::NotifyLeaving(const HANDLE &handleConsole)
 {
 	for (auto observer : cursorObservers)
 	{
